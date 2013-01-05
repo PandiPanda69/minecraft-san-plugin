@@ -1,6 +1,6 @@
 name: San Plugin
 main: fr.herobrine.plugin.san.SanPlugin
-version: 0.3
+version: 0.4
 author: Sébastien Mériot
 website: http://www.herobrine.fr/
 commands:

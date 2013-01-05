@@ -116,9 +116,9 @@ public class SanCommand implements CommandExecutor {
 		for (int i = 0; i < current; i++)
 			representation.append("§f0");
 		for (int i = 0; i < max - current - dead; i++)
-			representation.append("§8-");
+			representation.append("§80");
 		for (int i = 0; i < dead; i++)
-			representation.append("§cX");
+			representation.append("§c0");
 
 		return representation.toString();
 	}

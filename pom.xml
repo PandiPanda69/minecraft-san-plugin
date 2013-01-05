@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.herobrine</groupId>
   <artifactId>san-plugin</artifactId>
-  <version>0.3</version>
+  <version>0.4</version>
   <name>HerobrineSanPlugin</name>
   <url>http://www.herobrine.fr</url>
   <build>
