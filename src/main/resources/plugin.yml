@@ -1,10 +1,9 @@
-name: Sample Plugin
-main: com.dinnerbone.bukkit.sample.SamplePlugin
-version: 0.4
+name: San Plugin
+main: fr.herobrine.plugin.san.SanPlugin
+version: 0.3
+author: Sébastien Mériot
+website: http://www.herobrine.fr/
 commands:
-  pos:
-    description: Displays your position or teleports you to another.
-    usage: "Usage: '/pos' to get current position, or '/pos x y z' to teleport to x,y,z"
-  debug:
-    description: Toggles your debugging status for this plugin.
-    usage: /debug
+  san:
+    description: Displays your san status.
+    usage: "Usage: '/san' to get current san figures."
