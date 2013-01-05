@@ -3,9 +3,6 @@
 /.project
 /.settings
 
-# netbeans
-/nbproject
-
 # maven
 /target
 
