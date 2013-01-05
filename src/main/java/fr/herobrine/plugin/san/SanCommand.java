@@ -1,7 +1,5 @@
 package fr.herobrine.plugin.san;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
@@ -10,7 +8,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.common.collect.Maps;
@@ -61,43 +58,68 @@ public class SanCommand implements CommandExecutor {
 		params.put("player", playername);
 		String url = Utils.BuildFullUrl(API_URL, params);
 
+		// Consume webservice
+		JsonNode result = null;
 		try {
-			// Call API then parse JSON result
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode sanArray = mapper.readTree(new URL(url));
-
-			// Get values and check everything's ok
-			JsonNode values = sanArray.get("san");
-			if (values == null) {
-				sender.sendMessage("Une erreur est survenue en récupérant la santé mentale de \"" + playername + "\". L'administrateur a été notifié, veuillez essayer dans quelques instants.");
-				plugin.notifyError(sanArray.get("error").toString());
-			} else {
-
-				StringBuffer representation = new StringBuffer();
-				int current = values.get("cursan").asInt();
-				int max = values.get("maxsan").asInt();
-				int dead = values.get("deadsan").asInt();
-
-				for (int i = 0; i < current; i++)
-					representation.append("§f0");
-				for (int i = 0; i < max - current - dead; i++)
-					representation.append("§8-");
-				for (int i = 0; i < dead; i++)
-					representation.append("§cX");
-
-				sender.sendMessage("§eIl vous reste " + current + " points de santé mentale sur un total de " + max + ". [" + representation + "§e]");
-			}
-		} catch (MalformedURLException ex) {
-			sender.sendMessage("Une erreur est survenue en récupérant la santé mentale de \"" + playername + "\". L'administrateur a été notifié, veuillez essayer dans quelques instants.");
+			result = consumeSanWS(url);
+		} catch (Exception ex) {
 			plugin.notifyError(ex.getClass().getName() + " : " + ex.getMessage());
-		} catch (JsonProcessingException ex) {
-			sender.sendMessage("Une erreur est survenue en récupérant la santé mentale de \"" + playername + "\". L'administrateur a été notifié, veuillez essayer dans quelques instants.");
-			plugin.notifyError(ex.getClass().getName() + " : " + ex.getMessage());
-		} catch (IOException ex) {
-			sender.sendMessage("Une erreur est survenue en récupérant la santé mentale de \"" + playername + "\". L'administrateur a été notifié, veuillez essayer dans quelques instants.");
-			plugin.notifyError(ex.getClass().getName() + " : " + ex.getMessage());
+			sender.sendMessage("Une erreur est survenue en récupérant la santé mentale. L'administrateur a été notifié, veuillez essayer dans quelques instants.");
+			return true;
 		}
 
+		// Get values and send them to player
+		int current = result.get("cursan").asInt();
+		int max = result.get("maxsan").asInt();
+		int dead = result.get("deadsan").asInt();
+
+		String representation = buildRepresentation(current, max, dead);
+		sender.sendMessage("§eIl vous reste " + current + " points de santé mentale sur un total de " + max + ". [" + representation + "§e]");
+
 		return true;
+	}
+
+	/**
+	 * Send a GET request to web service (json expected)
+	 * @param url Url of the WS
+	 * @return JsonNode representing web service response
+	 * @throws Exception
+	 */
+	private JsonNode consumeSanWS(String url) throws Exception {
+
+		JsonNode values = null;
+
+		// Call API then parse JSON result
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode sanArray = mapper.readTree(new URL(url));
+
+		// Get values and check everything's ok
+		values = sanArray.get("san");
+		if (values == null) {
+			throw new Exception(sanArray.get("error").toString());
+		}
+
+		return values;
+	}
+
+	/**
+	 * Build a string representation using colored "0"
+	 * @param current Current value
+	 * @param max Max value
+	 * @param dead Dead value
+	 * @return String representation
+	 */
+	private String buildRepresentation(int current, int max, int dead) {
+
+		StringBuffer representation = new StringBuffer();
+
+		for (int i = 0; i < current; i++)
+			representation.append("§f0");
+		for (int i = 0; i < max - current - dead; i++)
+			representation.append("§8-");
+		for (int i = 0; i < dead; i++)
+			representation.append("§cX");
+
+		return representation.toString();
 	}
 }
