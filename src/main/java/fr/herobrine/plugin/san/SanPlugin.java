@@ -24,6 +24,7 @@ public class SanPlugin extends JavaPlugin {
 
 		// Register our commands
 		getCommand("san").setExecutor(new SanCommand(this));
+		getCommand("mantra").setExecutor(new MantraCommand(this));
 
 		if (log != null) {
 			PluginDescriptionFile pdfFile = this.getDescription();
