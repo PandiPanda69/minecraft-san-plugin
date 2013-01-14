@@ -1,9 +1,12 @@
 name: San Plugin
 main: fr.herobrine.plugin.san.SanPlugin
-version: 0.4
+version: 0.41
 author: Sébastien Mériot
 website: http://www.herobrine.fr/
 commands:
   san:
     description: Displays your san status.
     usage: "Usage: '/san' to get current san figures."
+  mantra:
+    description: "Copy a mantra you've seen ingame."
+    usage: "Usage: '/mantra' to get current mantra info."
