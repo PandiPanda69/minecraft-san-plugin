@@ -1,12 +1,21 @@
-name: San Plugin
+name: Herobrine.fr SAN Plugin
 main: fr.herobrine.plugin.san.SanPlugin
-version: 0.41
+version: 0.43
 author: Sébastien Mériot
 website: http://www.herobrine.fr/
 commands:
   san:
     description: Displays your san status.
     usage: "Usage: '/san' to get current san figures."
+  setblockat:
+    description: Change a block at specified location.
+    usage: "Usage: '/setblockat' to change a block at location."
+  replaceblockat:
+    description: Change a block at specified location by an other one.
+    usage: "Usage: '/replaceblockat' to change a block at location by an other one."
+  lightningring:
+    description: Ring of lighting around the player or coordinates.
+    usage: "Usage : /lightningring [world x y z / playername] [diameter] [amount]"
   mantra:
     description: "Copy a mantra you've seen ingame."
     usage: "Usage: '/mantra' to get current mantra info."

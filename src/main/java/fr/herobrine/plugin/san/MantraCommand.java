@@ -73,21 +73,21 @@ public class MantraCommand implements CommandExecutor {
 	    result = consumeMantraWS(url);
 	} catch (Exception ex) {
 	    plugin.notifyError(ex.getClass().getName() + " : " + ex.getMessage());
-	    sender.sendMessage("Une erreur est survenue, rien ne se passe (err 1)." + url);
+	    sender.sendMessage("Une erreur est survenue, rien ne se passe (err 1).");
 	    return true;
 	}
 
 	if (result.get("effect").asInt() == 1) {
-	    sender.sendMessage("§eVous connaissez déjà ce mantra." + url);
+	    sender.sendMessage("§eVous connaissez déjà ce mantra.");
 	    
 	} else if (result.get("effect").asInt() == 2) {
 	    sender.sendMessage("§eNouveau mantra recopié !");
 	    
 	} else if (result.get("effect").asInt() == 3) {
-	    sender.sendMessage("§eCe mantra ne semble pas exister." + url);
+	    sender.sendMessage("§eCe mantra ne semble pas exister.");
 	    
 	} else if (result.get("effect").asInt() == 0) {
-	    sender.sendMessage("§eUne erreur est survenue, rien ne se passe (err 2)." + url);
+	    sender.sendMessage("§eUne erreur est survenue, rien ne se passe (err 2).");
 	}
 
 	return true;

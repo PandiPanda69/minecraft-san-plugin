@@ -3,6 +3,9 @@ package fr.herobrine.plugin.san;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.util.List;
+import org.bukkit.World;
+
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,11 +23,13 @@ public class SanPlugin extends JavaPlugin {
 		}
 	}
 
-	public void onEnable() {
-
+	public void onEnable() {	
 		// Register our commands
 		getCommand("san").setExecutor(new SanCommand(this));
+		getCommand("setblockat").setExecutor(new SetBlockAtCommand(this));
+		getCommand("replaceblockat").setExecutor(new ReplaceBlockAtCommand(this));
 		getCommand("mantra").setExecutor(new MantraCommand(this));
+		getCommand("lightningring").setExecutor(new LightningRingCommand(this));
 
 		if (log != null) {
 			PluginDescriptionFile pdfFile = this.getDescription();
